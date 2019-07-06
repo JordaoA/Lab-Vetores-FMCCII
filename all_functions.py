@@ -101,3 +101,34 @@ def compare(congress_id1, congress_id2, votos_dict):
 		similaridade += i
 
 	return similaridade
+
+#2da Questao
+def most_similar(congress_id, votos_dict):
+	id_deputado = 0
+	maior_similaridade = -99999999
+
+	for i in votos_dict:
+		similaridade = -99999999
+		#Condicional para garantir que o deputado não sera comparado com ele mesmo
+		if i != congress_id:
+			similaridade = compare(congress_id,i,votos_dict)
+
+		if similaridade > maior_similaridade:
+			id_deputado = int(i)
+			maior_similaridade = similaridade
+
+	return id_deputado
+
+#3ra questao
+def least_similar(congress_id, votos_dict):
+	id_deputado = 0
+	menor_similaridade = 99999999
+
+	for i in votos_dict:
+		similaridade = compare(congress_id,i,votos_dict)
+		
+		if similaridade < menor_similaridade:
+			id_deputado = int(i)
+			menor_similaridade = similaridade
+
+	return id_deputado

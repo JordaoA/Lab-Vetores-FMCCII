@@ -1,36 +1,31 @@
 #coding: utf-8
-
-"""
-Construção da primeira função, com trabalho de calcular a similaridade entre dois vetores 
-de um dicionario com base em id's que servem como identificador dentro do dicionario.
-
-Forma mais basica da Função Principal, que funciona fazendo algo parecido com o
-Produto interno entre vetores.
-"""
-
 #Forma que todos os dados se organizam dentro do arquivo: id_proposicao,id_votacao,id_deputado,voto,partido.
 #Possibilidade de votos: Não" = -1, "Faltou" = 0, "Sim" = 1, "Obstrução" = 2, "Abstenção" = 3, "Art. 17" = 4
-
-#Extrategia: dicionario que guarda dicionarios que possuem listas.
-
+"""
+Extrategia: dicionario que guarda uma tupla, onde seu primeiro valor sera outro dicionario (que possui 
+como chave o id de cada proposição votada por ele e seu valor como o voto) e no segundo o seu partido.
+"""
 #função auxiliar para tratar cada dataset para colocalos de forma organizada no dicionario dinal
 def aux_build_dic(arq,votos):
-	arq = arq.split("\n")
-	
-	for i in arq:
-		i = i.split(",")
-	#id_proposicao,id_votacao,id_deputado,voto,partido.
-	for i in range(1,len(arq)):
-		if votos.has_key(arq[i][0]):
-			votos[arq[i][0]][arq[i][2]] = []
-			for j in range(1,len(arq[i])):
-				if arq[i][j] != arq[i][2]:
-					votos[arq[i][0]][arq[i][2]].append(arq[i][j])
-		else:
-			votos[arq[i][0]] = {}
+	#Tratando arquivos
+	arq = arq.split()
+	for i in range(len(arq)):
+		arq[i] = arq[i].split(",")
 
-	return votos
-			
+	#Trabalhando em cima da matriz para transforma-la em um dicionario
+	for i in range(1,len(arq)-1):
+		if arq[i][2] in votos:
+			#checando se a proposição atual ja esta inclusa no dicionario de proposições do deputado.
+			if arq[i][0] not in votos[arq[i][2]][0]:
+				votos[arq[i][2]][0][arq[i][0]] = arq[i][3]
+		else:
+			"""
+			guardando tupla que recebe em seu primeiro valor um dicionario que guarda o voto do deputado
+			em determinada lei e no segundo, guarda o seu partido 
+			"""
+			votos[arq[i][2]] = ({arq[i][0]:arq[i][3]},arq[i][4])
+
+#id_proposicao,id_votacao,id_deputado,voto,partido.	
 #funcao que cria dicionario a partir dos datasets fornecidos
 def build_Dic():
 	#dicionario final
@@ -43,16 +38,16 @@ def build_Dic():
 	path2018 = "data/votacoes_2018.csv"
 	
 	#abrindo arquivos
-	arq2015 = open(path2015,"w")
-	arq2016 = open(path2016,"w")
-	arq2017 = open(path2017,"w")
-	arq2018 = open(path2018,"w")
+	arq2015 = open(path2015,"r")
+	arq2016 = open(path2016,"r")
+	arq2017 = open(path2017,"r")
+	arq2018 = open(path2018,"r")
 
 	#usando função auxiliar para alterar dicionario
-	votos = aux_build_dic(arq2015,votos)
-	votos = aux_build_dic(arq2016,votos)
-	votos = aux_build_dic(arq2017,votos)
-	votos = aux_build_dic(arq2018,votos)
+	aux_build_dic(arq2015.read(),votos)
+	aux_build_dic(arq2016.read(),votos)
+	aux_build_dic(arq2017.read(),votos)
+	aux_build_dic(arq2018.read(),votos)
 
 	#fechando arquivos
 	arq2015.close()

@@ -57,4 +57,47 @@ def build_Dic():
 
 	return votos
 
-votos = build_Dic()
+votos_dict = build_Dic()
+
+#Coleta votos e agrupa todos em uma unica lista
+def coleta_votos(id_deputado,votos_dict):
+	vector = []
+	for i in votos_dict:
+		if i == id_deputado:
+			for i in votos_dict[id_deputado][0]:
+				vector.append(votos_dict[id_deputado][0][i])
+			break
+	return vector
+
+#Não" = -1, "Faltou" = 0, "Sim" = 1, "Obstrução" = 2, "Abstenção" = 3, "Art. 17" = 4
+#1ra questao
+#*Considerando que os dois congressistas tem o mesmo numero de votos.*
+def compare(congress_id1, congress_id2, votos_dict):
+	#vetores que com os votos dos dois deputados
+	vector_congress_1 = coleta_votos(congress_id1,votos_dict)
+	vector_congress_2 = coleta_votos(congress_id2,votos_dict)
+	#vetor que sera usado para calcular a similaridade entre os dois deputados.
+	result_vector = []
+	similaridade = 0.0
+	for i in range(len(vector_congress_1)):
+		"""
+		Adicionarei uma condicional para o caso dos elementos em mesmas posições do vetor sejam diferentes.
+		Pois com esse tipo de avaliação, teremos uma precisão maior de similaridade, que podera ser 
+		representada por numeros positivos e negativos.
+		"""
+		if vector_congress_1[i] == vector_congress_2[i]:
+			result_vector.append(1)
+		#Tratando casos em que os votos não são iguais, mas se aproximam (na minha opnião) de alguma forma.
+		else:
+			if vector_congress_1[i] == "1" and vector_congress_2[i] == "3" or vector_congress_1[i] == "3" and vector_congress_2[i] == "1":
+				result_vector.append(0.5)
+			elif vector_congress_1[i] == "-1" and vector_congress_2[i] == "2" or vector_congress_1[i] == "2" and vector_congress_2[i] == "-1":
+				result_vector.append(0.5)
+			else:
+				result_vector.append(-1)
+
+	#Somando elementos do vetor resultante
+	for i in result_vector:
+		similaridade += i
+
+	return similaridade

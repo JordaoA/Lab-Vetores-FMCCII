@@ -1,5 +1,5 @@
 #função auxiliar para tratar cada dataset para colocalos de forma organizada no dicionario dinal
-def aux_build_dic(arq,votos):
+def auxBuildDic(arq,votos):
 	#Tratando arquivos
 	arq = arq.split()
 	for i in range(len(arq)):
@@ -20,7 +20,7 @@ def aux_build_dic(arq,votos):
 
 #id_proposicao,id_votacao,id_deputado,voto,partido.	
 #funcao que cria dicionario a partir dos datasets fornecidos
-def build_Dic():
+def buildDic():
 	#dicionario final
 	votos = {}
 
@@ -35,9 +35,9 @@ def build_Dic():
 	arq2017 = open(path2017,"r")
 
 	#usando função auxiliar para alterar dicionario
-	aux_build_dic(arq2015.read(),votos)
-	aux_build_dic(arq2016.read(),votos)
-	aux_build_dic(arq2017.read(),votos)
+	auxBuildDic(arq2015.read(),votos)
+	auxBuildDic(arq2016.read(),votos)
+	auxBuildDic(arq2017.read(),votos)
 
 	#fechando arquivos
 	arq2015.close()

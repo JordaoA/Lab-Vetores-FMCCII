@@ -7,8 +7,8 @@ como chave o id de cada proposição votada por ele e seu valor como o voto) e n
 """
 import utils.csvToDict as buildDic
 
-votos_dict = buildDic.build_Dic()
-#ids para test ~ 178957 / 141417
+votos_dict = buildDic.buildDic()
+
 #Coleta votos e agrupa todos em uma unica lista
 def coleta_votos(id_deputado,votos_dict):
 	vector = []
@@ -55,32 +55,40 @@ def compare(congress_id1, congress_id2, votos_dict):
 	return similaridade
 
 #2da Questao
-def most_similar(congress_id, votos_dict):
-	id_deputado = 0
-	maior_similaridade = -99999999
+def mostSimilar(congressManId, votos_dict):
+	infinity = -99999999
+	idDeputado = None
+	maiorSimilaridade = infinity
+	congressManId = str(congressManId)
 
 	for i in votos_dict:
-		similaridade = -99999999
-		#Condicional para garantir que o deputado não sera comparado com ele mesmo
-		if i != congress_id:
-			similaridade = compare(congress_id,i,votos_dict)
+		similaridade = infinity
+		
+		if i != congressManId:
+			similaridade = compare(congressManId,i,votos_dict)
 
-		if similaridade > maior_similaridade:
-			id_deputado = int(i)
-			maior_similaridade = similaridade
+			if similaridade > maiorSimilaridade:
+				
+				idDeputado = int(i)
+				maiorSimilaridade = similaridade
 
-	return id_deputado
+	return idDeputado
 
 #3ra questao
-def least_similar(congress_id, votos_dict):
-	id_deputado = 0
-	menor_similaridade = 99999999
+def leastSimilar(congressManId, votos_dict):
+	infinity = 99999999
+	idDeputado = None
+	menorSimilaridade = infinity
+	congressManId = str(congressManId)
 
 	for i in votos_dict:
-		similaridade = compare(congress_id,i,votos_dict)
-		
-		if similaridade < menor_similaridade:
-			id_deputado = int(i)
-			menor_similaridade = similaridade
+		similaridade = infinity
 
-	return id_deputado
+		if i != congressManId:
+			similaridade = compare(congressManId,i,votos_dict)
+		
+		if similaridade < menorSimilaridade:
+			idDeputado = int(i)
+			menorSimilaridade = similaridade
+
+	return idDeputado

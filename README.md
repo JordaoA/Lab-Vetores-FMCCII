@@ -1,2 +1,4 @@
-# Lab_VEtores_FMCCII
-Questões referentes a aplicação de similaridade entre vetores, durante tempo em curso da disciplina de Fundamentos da matemática para ciência da computação II ( FMCCII ).
+# Lab-Vetores-FMCCII
+Questões básicas de implementação, referentes a aplicação do assunto de similaridade entre vetores.
+Esse foi um conteúdo estudado durante a disciplina de Fundamentos de matemática para ciência da computação II, e nesse exercício foi explorado um pouco da aplicação prática desse conceito matemático, em uma situação real.
+

@@ -28,24 +28,20 @@ def build_Dic():
 	path2015 = "../data/votacoes_2015.csv"
 	path2016 = "../data/votacoes_2016.csv"
 	path2017 = "../data/votacoes_2017.csv"
-	path2018 = "../data/votacoes_2018.csv"
 	
 	#abrindo arquivos
 	arq2015 = open(path2015,"r")
 	arq2016 = open(path2016,"r")
 	arq2017 = open(path2017,"r")
-	arq2018 = open(path2018,"r")
 
 	#usando função auxiliar para alterar dicionario
 	aux_build_dic(arq2015.read(),votos)
 	aux_build_dic(arq2016.read(),votos)
 	aux_build_dic(arq2017.read(),votos)
-	aux_build_dic(arq2018.read(),votos)
 
 	#fechando arquivos
 	arq2015.close()
 	arq2016.close()
 	arq2017.close()
-	arq2018.close()
 
 	return votos
